@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		801A79672CB59E1500271D3F /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = 801A79662CB59E1500271D3F /* KeyboardShortcuts */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		801A79492CB59B3F00271D3F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -23,15 +27,53 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		80A4F6182CB812C300B75B8D /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		801A79322CB59B3E00271D3F /* NotchBook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NotchBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		801A79482CB59B3F00271D3F /* NotchBookTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NotchBookTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		801A79522CB59B3F00271D3F /* NotchBookUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NotchBookUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+		801A79B02CB695D500271D3F /* Exceptions for "NotchBook" folder in "Compile Sources" phase from "NotchBook" target */ = {
+			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
+			buildPhase = 801A792E2CB59B3E00271D3F /* Sources */;
+			membershipExceptions = (
+				helpers/NowPlaying.h,
+			);
+		};
+		80A4F6192CB812C300B75B8D /* Exceptions for "Frameworks" folder in "Embed Frameworks" phase from "NotchBook" target */ = {
+			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
+			attributesByRelativePath = {
+				IOKit.framework = (CodeSignOnCopy, RemoveHeadersOnCopy, );
+				MediaRemote.framework = (CodeSignOnCopy, RemoveHeadersOnCopy, );
+			};
+			buildPhase = 80A4F6182CB812C300B75B8D /* Embed Frameworks */;
+			membershipExceptions = (
+				IOKit.framework,
+				MediaRemote.framework,
+			);
+		};
+/* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		801A79342CB59B3E00271D3F /* NotchBook */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				801A79B02CB695D500271D3F /* Exceptions for "NotchBook" folder in "Compile Sources" phase from "NotchBook" target */,
+			);
 			path = NotchBook;
 			sourceTree = "<group>";
 		};
@@ -45,6 +87,14 @@
 			path = NotchBookUITests;
 			sourceTree = "<group>";
 		};
+		801A79C62CB6B01600271D3F /* Frameworks */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				80A4F6192CB812C300B75B8D /* Exceptions for "Frameworks" folder in "Embed Frameworks" phase from "NotchBook" target */,
+			);
+			path = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +102,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				801A79672CB59E1500271D3F /* KeyboardShortcuts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,6 +126,7 @@
 		801A79292CB59B3E00271D3F = {
 			isa = PBXGroup;
 			children = (
+				801A79C62CB6B01600271D3F /* Frameworks */,
 				801A79342CB59B3E00271D3F /* NotchBook */,
 				801A794B2CB59B3F00271D3F /* NotchBookTests */,
 				801A79552CB59B3F00271D3F /* NotchBookUITests */,
@@ -102,6 +154,7 @@
 				801A792E2CB59B3E00271D3F /* Sources */,
 				801A792F2CB59B3E00271D3F /* Frameworks */,
 				801A79302CB59B3E00271D3F /* Resources */,
+				80A4F6182CB812C300B75B8D /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -109,9 +162,11 @@
 			);
 			fileSystemSynchronizedGroups = (
 				801A79342CB59B3E00271D3F /* NotchBook */,
+				801A79C62CB6B01600271D3F /* Frameworks */,
 			);
 			name = NotchBook;
 			packageProductDependencies = (
+				801A79662CB59E1500271D3F /* KeyboardShortcuts */,
 			);
 			productName = NotchBook;
 			productReference = 801A79322CB59B3E00271D3F /* NotchBook.app */;
@@ -175,6 +230,7 @@
 				TargetAttributes = {
 					801A79312CB59B3E00271D3F = {
 						CreatedOnToolsVersion = 16.0;
+						LastSwiftMigration = 1600;
 					};
 					801A79472CB59B3F00271D3F = {
 						CreatedOnToolsVersion = 16.0;
@@ -195,6 +251,9 @@
 			);
 			mainGroup = 801A79292CB59B3E00271D3F;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				801A79652CB59E1500271D3F /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 801A79332CB59B3E00271D3F /* Products */;
 			projectDirPath = "";
@@ -392,7 +451,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = NotchBook/NotchBook.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -400,7 +461,15 @@
 				DEVELOPMENT_TEAM = 9MAZY2DV8J;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks",
+					"$(PROJECT_DIR)/Frameworks",
+				);
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = NotchBook/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				"INFOPLIST_KEY_LSApplicationCategoryType[sdk=*]" = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -410,6 +479,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = guruprasad.NotchBook;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "NotchBook/helpers/NotchBook-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -419,7 +490,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = NotchBook/NotchBook.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -427,7 +500,14 @@
 				DEVELOPMENT_TEAM = 9MAZY2DV8J;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks",
+					"$(PROJECT_DIR)/Frameworks",
+				);
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = NotchBook/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -437,6 +517,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = guruprasad.NotchBook;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "NotchBook/helpers/NotchBook-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -549,6 +631,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		801A79652CB59E1500271D3F /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sindresorhus/KeyboardShortcuts.git";
+			requirement = {
+				kind = exactVersion;
+				version = 2.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		801A79662CB59E1500271D3F /* KeyboardShortcuts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 801A79652CB59E1500271D3F /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */;
+			productName = KeyboardShortcuts;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 801A792A2CB59B3E00271D3F /* Project object */;
 }

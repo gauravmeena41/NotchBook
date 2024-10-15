@@ -6,15 +6,21 @@
 //
 
 import SwiftUI
+import Combine
+import AVFoundation
+import KeyboardShortcuts
+import Cocoa
 
 @main
 struct NotchBookApp: App {
-    let persistenceController = PersistenceController.shared
-
+    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    
     var body: some Scene {
-        WindowGroup {
-            ContentView()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+        Settings {
+            NotchBookSettingSView()
+                .frame(width: 500, height: 600)
         }
+        .windowResizability(.contentSize)
+        .defaultSize(width: 500, height: 600)
     }
 }

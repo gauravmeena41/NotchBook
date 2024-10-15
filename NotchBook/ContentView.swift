@@ -5,79 +5,84 @@
 //  Created by Guruprasad Meena on 08/10/24.
 //
 
+import AVFoundation
+import Combine
+import KeyboardShortcuts
 import SwiftUI
-import CoreData
 
 struct ContentView: View {
-    @Environment(\.managedObjectContext) private var viewContext
-
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
-        animation: .default)
-    private var items: FetchedResults<Item>
-
+    @EnvironmentObject var vm: NotchBookViewModel
+    @EnvironmentObject var musicManager: MusicManager
+    @EnvironmentObject var notificationManager: NotificationManager
+    @EnvironmentObject var volumneManager: VolumeManager
+    @StateObject var batteryManager: BatteryStatusManager
+    
+    @State private var haptics: Bool = false
+    @State private var isHovering: Bool = false
+    @State private var hoveringTimer: Timer?
+    
     var body: some View {
-        NavigationView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp!, formatter: itemFormatter)")
-                    } label: {
-                        Text(item.timestamp!, formatter: itemFormatter)
+        let notchSizes = NotchSizes().size
+        let notchSizesWithNotification = NotchSizes().sizeWithNotification
+        let isClosed = vm.notchState == .closed
+        let isPlaying = musicManager.isPlaying
+        let isNotificationVisible = notificationManager.isNotificationVisible
+        
+        ZStack {
+            NotchBookLayout()
+                .padding([.horizontal], isClosed ? 0 : 30)
+                .padding([.bottom], isClosed ? 0 : 15)
+                .frame(
+                    width: isClosed ? notchSizes.closed.width : notchSizes.opened.width,
+                    height: isClosed ? notchSizes.closed.height : notchSizes.opened.height!
+                )
+                .frame(
+                    maxWidth: isClosed
+                    ? ((isPlaying || isNotificationVisible || volumneManager.isVolumeChanged)
+                       ? notchSizesWithNotification.closed.width!  + (self.isHovering ? 15 : 0) : notchSizes.closed.width! + (self.isHovering ? 15 : 0))
+                    : notchSizes.opened.width,
+                    maxHeight: isClosed
+                    ? (isNotificationVisible || volumneManager.isVolumeChanged)
+                    ? notchSizesWithNotification.closed.height!
+                    + ((!isNotificationVisible && volumneManager.isVolumeChanged) ? 5 : 0)
+                    : notchSizes.closed.height! + (self.isHovering ? 10 : 0) : notchSizes.opened.height!
+                )
+                .background(.black)
+                .mask {
+                    NotchShape(
+                        cornerRadius: isClosed
+                        ? vm.sizes.cornerRadius.closed.inset : vm.sizes.cornerRadius.opened.inset)
+                }
+                .sensoryFeedback(.alignment, trigger: haptics)
+                .onHover { hovering in
+                    if hovering {
+                        withAnimation(.spring(.bouncy(duration: 0.4))) {
+                            self.isHovering = true
+                            haptics.toggle()
+                        }
+                        
+                        self.hoveringTimer = Timer.scheduledTimer(withTimeInterval: vm.waitBeforeExpandingNotch, repeats: false) { _ in
+                            vm.openNotch()
+                            haptics.toggle()
+                        }
+                    } else {
+                        self.hoveringTimer?.invalidate()
+                        
+                        withAnimation(.spring(.bouncy(duration: 0.4))) {
+                            self.isHovering = false
+                            haptics.toggle()
+                        }
+                        vm.closeNotch()
                     }
                 }
-                .onDelete(perform: deleteItems)
-            }
-            .toolbar {
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
-                    }
-                }
-            }
-            Text("Select an item")
         }
+        .frame(
+            maxWidth: notchSizes.opened.width!, maxHeight: notchSizes.opened.height!, alignment: .top
+        )
+        .shadow(color: .black.opacity(0.6), radius: 10)
+        .environmentObject(vm)
+        .environmentObject(batteryManager)
+        .environmentObject(musicManager)
+        .environmentObject(notificationManager)
     }
-
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(context: viewContext)
-            newItem.timestamp = Date()
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
-        }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            offsets.map { items[$0] }.forEach(viewContext.delete)
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
-        }
-    }
-}
-
-private let itemFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateStyle = .short
-    formatter.timeStyle = .medium
-    return formatter
-}()
-
-#Preview {
-    ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
 }
